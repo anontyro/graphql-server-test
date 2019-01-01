@@ -1,20 +1,15 @@
-const { GraphQLServer } = require('graphql-yoga');
+const express = require("express");
+const graphqlHTTP = require("express-graphql");
+const schema = require("./schemas/bggSchema");
+const app = express();
 
-const typeDefs = `
-    type Query {
-        info: String!
-    }
-`;
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: true
+  })
+);
 
-const resolvers = {
-    Query: {
-        info: () => `Welcome To GraphQL`
-    }
-}
-
-const server = new GraphQLServer({
-    typeDefs,
-    resolvers,
-})
-
-server.start(() => console.log('Server has started'));
+app.listen(4000);
+console.log("GraphQL Server running...");

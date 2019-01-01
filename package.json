@@ -15,6 +15,11 @@
   "author": "alex wilkinson",
   "license": "MIT",
   "dependencies": {
-    "graphql-yoga": "^1.16.9"
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.0.2",
+    "graphql-yoga": "^1.16.9",
+    "node-fetch": "^2.3.0",
+    "xml2js": "^0.4.19"
   }
 }
