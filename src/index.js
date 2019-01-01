@@ -1,6 +1,6 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
-const schema = require("./schemas/bggSchema");
+import schema from "./schemas/bggSchema";
 const app = express();
 
 app.use(
