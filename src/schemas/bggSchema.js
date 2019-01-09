@@ -8,80 +8,10 @@ import {
   GraphQLList,
   GraphQLBoolean,
 } from 'graphql';
-import { urlencoded } from 'body-parser';
+import BoardgameType from '../types/boardgameType';
+import * as bggConsts from '../data/appConstants';
 
 const parseXML = util.promisify(require('xml2js').parseString);
-
-const GameNameValueType = new GraphQLObjectType({
-  name: 'GameNameValue',
-  description: '...',
-
-  fields: () => ({
-    primary: GraphQLBoolean,
-    sortindex: GraphQLInt,
-  }),
-});
-
-const GameNameType = new GraphQLObjectType({
-  name: 'GameName',
-  description: 'name object for the game',
-
-  fields: () => ({
-    name: {
-      type: GraphQLString,
-      resolve: xml => xml._,
-    },
-    primary: {
-      type: GraphQLBoolean,
-      resolve: xml => xml.$.primary === 'true',
-    },
-    sortIndex: {
-      type: GraphQLInt,
-      resolve: xml => xml.$.sortindex,
-    },
-  }),
-});
-
-const BoardgameType = new GraphQLObjectType({
-  name: 'Boardgame',
-  description: '..',
-
-  fields: () => ({
-    name: {
-      type: new GraphQLList(GameNameType),
-      resolve: xml => xml.name,
-    },
-    yearPublished: {
-      type: GraphQLString,
-      resolve: xml => xml.yearpublished[0],
-    },
-  }),
-});
-
-// SEARCH
-
-const BoardgameListType = new GraphQLObjectType({
-  name: 'BoardgameItem',
-  description: 'board game item returned from search',
-  fields: () => ({
-    name: {
-      type: GraphQLString,
-      resolve: xml => xml.name[0].$.value,
-    },
-    id: {
-      type: GraphQLString,
-      resolve: xml => xml.$.id,
-    },
-    type: {
-      type: GraphQLString,
-      resolve: xml => xml.name[0].$.type,
-    },
-    yearPublished: {
-      type: GraphQLString,
-      resolve: xml => (xml.yearpublished ? xml.yearpublished[0].$.value : 'N/A'),
-    },
-  }),
-});
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -93,20 +23,21 @@ export default new GraphQLSchema({
         type: BoardgameType,
         args: {
           id: { type: GraphQLInt },
+          type: { type: GraphQLString, defaultValue: 'boardgame' },
         },
         resolve: (root, args) =>
-          fetch(`https://www.boardgamegeek.com/xmlapi/boardgame/${args.id}`)
+          fetch(`${bggConsts.bggApi}thing?type=${args.type}&id=${args.id}`)
             .then(response => response.text())
             .then(parseXML)
-            .then(bg => bg.boardgames.boardgame[0]),
+            .then(bg => bg.items.item[0]),
       },
       searchGame: {
-        type: new GraphQLList(BoardgameListType),
+        type: new GraphQLList(BoardgameType),
         args: {
           query: { type: GraphQLString },
         },
         resolve: (root, args) =>
-          fetch(`https://www.boardgamegeek.com/xmlapi2/search?query=${args.query}`)
+          fetch(`${bggConsts.bggApi}search?query=${args.query}`)
             .then(response => response.text())
             .then(parseXML)
             .then(results => results.items.item),
@@ -115,9 +46,9 @@ export default new GraphQLSchema({
   }),
 });
 
-const output = fetch(`https://api.geekdo.com/xmlapi2/search?query=mission`)
-  .then(response => response.text())
-  .then(parseXML)
-  // .then(results => results.items.$.total)  // gets total results
-  .then(results => results.items.item[0].$.id);
-output;
+// const output = fetch(`https://www.boardgamegeek.com/xmlapi2/thing?type=boardgame&id=176920`)
+//   .then(response => response.text())
+//   .then(parseXML)
+//   // .then(results => results.items.$.total)  // gets total results
+//   .then(results => results.items.item[0].name[0].$);
+// output;
