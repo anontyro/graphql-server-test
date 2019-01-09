@@ -1,3 +1,7 @@
 module.exports = {
-    "extends": "airbnb-base"
+  extends: 'prettier',
+  parser: 'babel-eslint',
+  rules: {
+    'linebreak-style': 0,
+  },
 };
