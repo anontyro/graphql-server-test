@@ -13,6 +13,20 @@ import * as bggConsts from '../data/appConstants';
 
 const parseXML = util.promisify(require('xml2js').parseString);
 
+const boardGameResolver = async (root, args) => {
+  const response = await fetch(`${bggConsts.BGG_API}thing?type=${args.type}&id=${args.id}`);
+  const arg1 = await response.text();
+  const bg = await parseXML(arg1);
+  return bg.items.item[0];
+};
+
+const searchResolver = async (root, args) => {
+  const response = await fetch(`${bggConsts.BGG_API}search?query=${args.query}`);
+  const arg1 = await response.text();
+  const results = await parseXML(arg1);
+  return results.items.item;
+};
+
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
@@ -25,30 +39,15 @@ export default new GraphQLSchema({
           id: { type: GraphQLInt },
           type: { type: GraphQLString, defaultValue: 'boardgame' },
         },
-        resolve: (root, args) =>
-          fetch(`${bggConsts.bggApi}thing?type=${args.type}&id=${args.id}`)
-            .then(response => response.text())
-            .then(parseXML)
-            .then(bg => bg.items.item[0]),
+        resolve: (root, args) => boardGameResolver(root, args),
       },
       searchGame: {
         type: new GraphQLList(BoardgameType),
         args: {
           query: { type: GraphQLString },
         },
-        resolve: (root, args) =>
-          fetch(`${bggConsts.bggApi}search?query=${args.query}`)
-            .then(response => response.text())
-            .then(parseXML)
-            .then(results => results.items.item),
+        resolve: (root, args) => searchResolver(root, args),
       },
     }),
   }),
 });
-
-// const output = fetch(`https://www.boardgamegeek.com/xmlapi2/thing?type=boardgame&id=176920`)
-//   .then(response => response.text())
-//   .then(parseXML)
-//   // .then(results => results.items.$.total)  // gets total results
-//   .then(results => results.items.item[0].name[0].$);
-// output;
