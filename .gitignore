@@ -4,3 +4,4 @@ typings/
 node_modules/
 .DS*
 ._.*
+desktop.ini
