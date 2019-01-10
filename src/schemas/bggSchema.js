@@ -9,6 +9,7 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 import BoardgameType from '../types/boardgameType';
+import UserType from '../types/userType';
 import * as bggConsts from '../data/appConstants';
 
 const parseXML = util.promisify(require('xml2js').parseString);
@@ -26,6 +27,8 @@ const searchResolver = async (root, args) => {
   const results = await parseXML(arg1);
   return results.items.item;
 };
+
+const userResolver = async (root, args) => {};
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -47,6 +50,13 @@ export default new GraphQLSchema({
           query: { type: GraphQLString },
         },
         resolve: (root, args) => searchResolver(root, args),
+      },
+      user: {
+        type: UserType,
+        args: {
+          userName: { type: GraphQLString },
+        },
+        resolve: (root, args) => userResolver(root, args),
       },
     }),
   }),
