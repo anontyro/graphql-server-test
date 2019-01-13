@@ -8,11 +8,7 @@ import {
 } from 'graphql';
 import { GenericObjectType } from './genericType';
 import BoardgameType from './boardgameType';
-
-const getXmlValue = (xml, key) => {
-  key = key.toLowerCase().trim();
-  return xml[key][0].$.value;
-};
+import { getXmlValue } from '../utils/xmlUtils';
 
 export default new GraphQLObjectType({
   name: 'userItem',
