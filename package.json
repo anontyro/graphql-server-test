@@ -28,6 +28,7 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
@@ -36,12 +37,16 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "sinon": "^7.2.2"
   },
   "ava": {
     "files": [
       "**/*.test.js"
     ],
-    "require": ["@babel/register"]
+    "require": [
+      "@babel/register",
+      "@babel/polyfill"
+    ]
   }
 }
