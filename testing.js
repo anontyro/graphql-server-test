@@ -20,7 +20,7 @@ const request = async uri => {
     }
     const arg1 = await response.text();
     const parse = await parseXML(arg1);
-    return parse;
+    return parse.items.item[2].name[0];
   } catch (err) {
     console.log(err.message);
   }
@@ -29,3 +29,4 @@ const request = async uri => {
 const out = request(URIs.COLLECTION);
 
 out;
+console.log(JSON.stringify(out, null, 2));
