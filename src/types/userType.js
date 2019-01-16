@@ -20,7 +20,7 @@ export default new GraphQLObjectType({
     },
     id: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'id'),
+      resolve: xml => xml.$.id,
     },
     firstName: {
       type: GraphQLString,

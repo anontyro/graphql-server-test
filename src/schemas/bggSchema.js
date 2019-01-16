@@ -28,7 +28,16 @@ const searchResolver = async (root, args) => {
   return results.items.item;
 };
 
-const userResolver = async (root, args) => {};
+const userResolver = async (root, args) => {
+  const { getCollection, userName } = args;
+  const userResponse = await fetch(`${bggConsts.BGG_API}user?name=${userName}`);
+  if (getCollection) {
+  }
+  const arg1 = await userResponse.text();
+  const results = await parseXML(arg1);
+
+  return results.user;
+};
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
