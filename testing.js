@@ -20,12 +20,12 @@ const request = async uri => {
     }
     const arg1 = await response.text();
     const parse = await parseXML(arg1);
-    return parse.user.$.id;
+    return parse.items.item;
   } catch (err) {
     console.log(err.message);
   }
 };
 
-const out = request(URIs.USER);
+const out = request(URIs.COLLECTION);
 
 out;

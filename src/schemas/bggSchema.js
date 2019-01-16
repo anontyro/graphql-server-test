@@ -10,7 +10,9 @@ import {
 } from 'graphql';
 import BoardgameType from '../types/boardgameType';
 import UserType from '../types/userType';
+import CollectionType from '../types/collectionType';
 import * as bggConsts from '../data/appConstants';
+import { responseWrapper } from '../utils/responseWrapper';
 
 const parseXML = util.promisify(require('xml2js').parseString);
 
@@ -39,6 +41,21 @@ const userResolver = async (root, args) => {
   return results.user;
 };
 
+const collectionResolve = async (root, args) => {
+  const { userName } = args;
+  const response = await fetch(`${bggConsts.BGG_API}collection?username=${userName}`);
+  const status = {
+    status: response.status,
+    statusText: response.statusText,
+  };
+  const arg1 = await response.text();
+  const parsed = await parseXML(arg1);
+  console.log(JSON.stringify(parsed, null, 2));
+  console.log(`RESPONSE: ${response.status}`);
+  const output = responseWrapper(status, parsed);
+  return output;
+};
+
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
@@ -62,11 +79,19 @@ export default new GraphQLSchema({
       },
       user: {
         type: UserType,
+        description: '',
         args: {
           userName: { type: GraphQLString },
           getCollection: { type: GraphQLBoolean, defaultValue: false },
         },
         resolve: (root, args) => userResolver(root, args),
+      },
+      collection: {
+        type: CollectionType,
+        args: {
+          userName: { type: GraphQLString },
+        },
+        resolve: (root, args) => collectionResolve(root, args),
       },
     }),
   }),
