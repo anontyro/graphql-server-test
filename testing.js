@@ -20,13 +20,15 @@ const request = async uri => {
     }
     const arg1 = await response.text();
     const parse = await parseXML(arg1);
-    return parse.items.item[2].name[0];
+    return parse;
   } catch (err) {
     console.log(err.message);
   }
+  // const response = await fetch(uri);
+  // const args = await response.statusText;
+  // return args;
 };
 
 const out = request(URIs.COLLECTION);
 
 out;
-console.log(JSON.stringify(out, null, 2));

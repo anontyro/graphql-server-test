@@ -55,6 +55,7 @@ export default new GraphQLSchema({
         type: UserType,
         args: {
           userName: { type: GraphQLString },
+          getCollection: { type: GraphQLBoolean, defaultValue: false },
         },
         resolve: (root, args) => userResolver(root, args),
       },
