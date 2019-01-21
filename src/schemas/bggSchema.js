@@ -54,6 +54,14 @@ const collectionResolve = async (root, args) => {
   return output;
 };
 
+const hotItemResolve = async (root, args) => {
+  const { item } = args;
+  const response = await fetch(`${bggConsts.BGG_API}hot?type=${item}`);
+  const arg1 = await response.text();
+  const parsed = await parseXML(arg1);
+  return parsed.items.item;
+};
+
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
@@ -91,6 +99,13 @@ export default new GraphQLSchema({
         },
         resolve: (root, args) => collectionResolve(root, args),
       },
+      hotItems: {
+        type: new GraphQLList(BoardgameType),
+        args: {
+          item: { type: GraphQLString, defaultValue: 'boardgame'},
+        },
+        resolve: (root, args) => hotItemResolve(root, args),
+      }
     }),
   }),
 });
