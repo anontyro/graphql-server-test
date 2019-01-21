@@ -50,8 +50,6 @@ const collectionResolve = async (root, args) => {
   };
   const arg1 = await response.text();
   const parsed = await parseXML(arg1);
-  console.log(JSON.stringify(parsed, null, 2));
-  console.log(`RESPONSE: ${response.status}`);
   const output = responseWrapper(status, parsed);
   return output;
 };

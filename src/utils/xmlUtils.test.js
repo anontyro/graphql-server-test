@@ -1,6 +1,7 @@
 import test from 'ava';
-import { getXmlValue } from './xmlUtils';
+import { getXmlValue, getGameCollectionStatus } from './xmlUtils';
 import { mockUser, MOCK_USER_CONSTS } from '../mocks/mockUser';
+import { COLLECTION_MOCK, COLLECTION_CONSTS } from '../mocks/collectionMock';
 
 test('getXmlValue is case insensitive', t => {
   t.is(getXmlValue(mockUser, MOCK_USER_CONSTS.NAME.key.toUpperCase()), MOCK_USER_CONSTS.NAME.value);
@@ -41,4 +42,32 @@ test('getXmlValue will return country', t => {
 
 test('getXmlValue will return state/province where possiable', t => {
   t.is(getXmlValue(mockUser, MOCK_USER_CONSTS.STATE_OR_PROVINCE.key), MOCK_USER_CONSTS.STATE_OR_PROVINCE.value);
+});
+
+test('getGameCollectionStatus will return own value as boolean', t => {
+  const item = COLLECTION_MOCK.items.item[0].status[0];
+  const value = getGameCollectionStatus(item, COLLECTION_CONSTS.STATUS.OWNED);
+  const isTrue = item.$[COLLECTION_CONSTS.STATUS.OWNED] === '1';
+  t.is(value, isTrue);
+});
+
+test('getGameCollectionStatus will return prevown value as boolean', t => {
+  const item = COLLECTION_MOCK.items.item[0].status[0];
+  const value = getGameCollectionStatus(item, COLLECTION_CONSTS.STATUS.PREVIOUS_OWNED);
+  const isTrue = item.$[COLLECTION_CONSTS.STATUS.PREVIOUS_OWNED] === '1';
+  t.is(value, isTrue);
+});
+
+test('getGameCollectionStatus will return fortrade value as boolean', t => {
+  const item = COLLECTION_MOCK.items.item[0].status[0];
+  const value = getGameCollectionStatus(item, COLLECTION_CONSTS.STATUS.FOR_TRADE);
+  const isTrue = item.$[COLLECTION_CONSTS.STATUS.FOR_TRADE] === '1';
+  t.is(value, isTrue);
+});
+
+test('getGameCollectionStatus will return want value as boolean', t => {
+  const item = COLLECTION_MOCK.items.item[0].status[0];
+  const value = getGameCollectionStatus(item, COLLECTION_CONSTS.STATUS.WANT);
+  const isTrue = item.$[COLLECTION_CONSTS.STATUS.WANT] === '1';
+  t.is(value, isTrue);
 });
