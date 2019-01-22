@@ -1,4 +1,5 @@
 import express from 'express';
+import "@babel/polyfill";
 import graphqlHTTP from 'express-graphql';
 import schema from './schemas/bggSchema';
 

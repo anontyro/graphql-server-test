@@ -1,12 +1,16 @@
 {
   "name": "graphql-test",
   "version": "1.0.0",
-  "description": "graphQL testing",
+  "description": "board game geek API V2 implementation via graphQL",
   "main": "src/index.js",
   "scripts": {
     "test": "ava",
     "start": "nodemon --exec babel-node src/index.js",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+    "clean": "rm -rf build && mkdir build",
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
+    "build": "npm run clean && npx babel src -d build",
+    "prod:build": "npm run clean && npx babel src -d build --ignore 'src/mocks/**/*.js','src/utils/**/*.test.js'",
+    "prod:server": "node ./build/index.js"
   },
   "keywords": [
     "graphQl",
