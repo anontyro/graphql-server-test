@@ -9,7 +9,7 @@ import {
 import { GenericObjectType } from './genericType';
 import BoardgameType from './boardgameType';
 import { getGameCollectionStatus } from '../utils/xmlUtils';
-import { COLLECTION_CONSTS } from '../mocks/collectionMock';
+import { COLLECTION_CONSTS } from '../data/collectionConstants';
 
 const CollectionGameStatusType = new GraphQLObjectType({
   name: 'CollectionGameStatus',

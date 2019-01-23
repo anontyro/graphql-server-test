@@ -1,7 +1,8 @@
 import test from 'ava';
 import { getXmlValue, getGameCollectionStatus } from './xmlUtils';
 import { mockUser, MOCK_USER_CONSTS } from '../mocks/mockUser';
-import { COLLECTION_MOCK, COLLECTION_CONSTS } from '../mocks/collectionMock';
+import { COLLECTION_MOCK } from '../mocks/collectionMock';
+import { COLLECTION_CONSTS } from '../data/collectionConstants';
 
 test('getXmlValue is case insensitive', t => {
   t.is(getXmlValue(mockUser, MOCK_USER_CONSTS.NAME.key.toUpperCase()), MOCK_USER_CONSTS.NAME.value);
