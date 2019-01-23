@@ -16,7 +16,7 @@ export default new GraphQLObjectType({
   fields: () => ({
     userName: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'name'),
+      resolve: xml => xml.$.name,
     },
     id: {
       type: GraphQLString,

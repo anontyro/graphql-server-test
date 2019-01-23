@@ -78,7 +78,7 @@ export default new GraphQLObjectType({
   }),
 });
 
-const GameNameType = new GraphQLObjectType({
+export const GameNameType = new GraphQLObjectType({
   name: 'GameName',
   description: 'name object for the game',
 
