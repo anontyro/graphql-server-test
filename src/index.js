@@ -1,17 +1,17 @@
+import '@babel/polyfill';
 import express from 'express';
-import "@babel/polyfill";
 import graphqlHTTP from 'express-graphql';
-import schema from './schemas/bggSchema';
+import schema from './schemas/mainSchema';
 
-const app = express();
+const app = express ();
 
-app.use(
+app.use (
   '/graphql',
-  graphqlHTTP({
+  graphqlHTTP ({
     schema,
     graphiql: true,
-  }),
+  })
 );
 
-app.listen(4000);
-console.log('GraphQL Server running...');
+app.listen (4000);
+console.log ('GraphQL Server running...');
