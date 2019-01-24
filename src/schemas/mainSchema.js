@@ -11,7 +11,7 @@ export const parseXML = util.promisify (require ('xml2js').parseString);
 export default new GraphQLSchema ({
   query: new GraphQLObjectType ({
     name: 'Query',
-    description: '..',
+    description: 'Main query schema for board game geek api https://boardgamegeek.com/wiki/page/BGG_XML_API2',
 
     fields: () => ({
       boardgame: boardGameSchema,

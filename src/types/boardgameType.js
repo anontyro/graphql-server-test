@@ -6,99 +6,118 @@ import {
   GraphQLList,
   GraphQLBoolean,
 } from 'graphql';
-import { GenericObjectType } from './genericType';
+import {GenericObjectType} from './genericType';
 import * as boardGameConstants from '../data/boardGameConstants';
 
 // Default object type for the boardgame item
-export default new GraphQLObjectType({
+export default new GraphQLObjectType ({
   name: 'BoardgameItem',
-  description: 'board game item returned from search',
+  description: `main board game item returned from the boardgame endpoint this item contains an indepth description
+  that can be used to get complete game detail`,
   fields: () => ({
     name: {
-      type: new GraphQLList(GameNameType),
+      type: new GraphQLList (GameNameType),
+      description: 'the list of different names for the item',
       resolve: xml => xml.name,
     },
     thumbnails: {
-      type: new GraphQLList(GraphQLString),
+      type: new GraphQLList (GraphQLString),
+      description: 'a list of all the thumbnail strings attached to this item',
       resolve: xml => xml.thumbnail,
     },
     images: {
-      type: new GraphQLList(GraphQLString),
+      type: new GraphQLList (GraphQLString),
+      description: 'a list of all the image strings attached to this item',
       resolve: xml => xml.image,
     },
     description: {
-      type: new GraphQLList(GraphQLString),
+      type: new GraphQLList (GraphQLString),
+      description: 'a list of stringHTML items containing information about the item',
       resolve: xml => xml.description,
     },
     minPlayers: {
-      type: GraphQLString,
+      type: GraphQLInt,
+      description: 'an int value for the minimum number of players able to play the game',
       resolve: xml => xml.minplayers[0].$.value,
     },
     maxPlayers: {
-      type: GraphQLString,
+      type: GraphQLInt,
+      description: 'an int value for the maximum number of players the game is able to support',
       resolve: xml => xml.maxplayers[0].$.value,
     },
     playTime: {
-      type: GraphQLString,
+      type: GraphQLInt,
+      description: 'the amount of time in minutes the game is expected to last according to the publisher',
       resolve: xml => xml.playingtime[0].$.value,
     },
     id: {
-      type: GraphQLString,
+      type: GraphQLInt,
+      description: 'the unique id number associated with this item',
       resolve: xml => xml.$.id,
     },
-    type: {
-      type: GraphQLString,
-      resolve: xml => xml.name[0].$.type,
-    },
     yearPublished: {
-      type: GraphQLString,
+      type: GraphQLInt,
+      description: 'the year the game was officially published as an int, will return null if not published',
       resolve: xml => (xml.yearpublished ? xml.yearpublished[0].$.value : null),
     },
     mechanics: {
-      type: new GraphQLList(GenericObjectType),
-      resolve: xml => xml.link.filter(x => x.$.type === boardGameConstants.GAME_MECHANIC),
+      type: new GraphQLList (GenericObjectType),
+      description: 'a list of different game mechanics that are associated with the game',
+      resolve: xml =>
+        xml.link.filter (x => x.$.type === boardGameConstants.GAME_MECHANIC),
     },
     category: {
-      type: new GraphQLList(GenericObjectType),
-      resolve: xml => xml.link.filter(x => x.$.type === boardGameConstants.GAME_CATEGORY),
+      type: new GraphQLList (GenericObjectType),
+      description: 'a list of categories that the game falls into',
+      resolve: xml =>
+        xml.link.filter (x => x.$.type === boardGameConstants.GAME_CATEGORY),
     },
     designer: {
-      type: new GraphQLList(GenericObjectType),
-      resolve: xml => xml.link.filter(x => x.$.type === boardGameConstants.GAME_DESINGER),
+      type: new GraphQLList (GenericObjectType),
+      description: 'a list of all the designers that helped create and develop the game',
+      resolve: xml =>
+        xml.link.filter (x => x.$.type === boardGameConstants.GAME_DESINGER),
     },
     artist: {
-      type: new GraphQLList(GenericObjectType),
-      resolve: xml => xml.link.filter(x => x.$.type === boardGameConstants.GAME_ARTIST),
+      type: new GraphQLList (GenericObjectType),
+      description: 'a list of all the artists that contributed to the artwork in the game',
+      resolve: xml =>
+        xml.link.filter (x => x.$.type === boardGameConstants.GAME_ARTIST),
     },
     publisher: {
-      description: 'returns a list of all the publishers for the game',
-      type: new GraphQLList(GenericObjectType),
-      resolve: xml => xml.link.filter(x => x.$.type === boardGameConstants.GAME_PUBLISHER),
+      description: 'a list of all the publishers who have published the game',
+      type: new GraphQLList (GenericObjectType),
+      resolve: xml =>
+        xml.link.filter (x => x.$.type === boardGameConstants.GAME_PUBLISHER),
     },
   }),
 });
 
-export const GameNameType = new GraphQLObjectType({
+export const GameNameType = new GraphQLObjectType ({
   name: 'GameName',
-  description: 'name object for the game',
+  description: 'general name object for the game containing three items: name, primary, sortIndex',
 
   fields: () => ({
     name: {
       type: GraphQLString,
+      description: 'name of the game',
       resolve: xml => xml.$.value,
     },
     primary: {
       type: GraphQLBoolean,
+      description: 'is this the primary listing item',
       resolve: xml => xml.$.type === 'primary',
     },
     sortIndex: {
       type: GraphQLInt,
+      description: 'sorting index used to list the names in order',
       resolve: xml => xml.$.sortindex,
     },
   }),
 });
 
-const GameNameValueType = new GraphQLObjectType({
+// currently not in use
+const GameNameValueType = new GraphQLObjectType ({
   name: 'GameNameValue',
   description: '...',
 
