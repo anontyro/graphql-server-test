@@ -1,61 +1,69 @@
 import {
   GraphQLObjectType,
-  GraphQLSchema,
   GraphQLInt,
   GraphQLString,
   GraphQLList,
   GraphQLBoolean,
 } from 'graphql';
-import { GenericObjectType } from './genericType';
-import BoardgameType from './boardgameType';
-import { getGameCollectionStatus } from '../utils/xmlUtils';
-import { COLLECTION_CONSTS } from '../data/collectionConstants';
+import {getGameCollectionStatus} from '../utils/xmlUtils';
+import {COLLECTION_CONSTS} from '../data/collectionConstants';
 
-const CollectionGameStatusType = new GraphQLObjectType({
+const CollectionGameStatusType = new GraphQLObjectType ({
   name: 'CollectionGameStatus',
   description: '',
 
   fields: () => ({
     owned: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.OWNED),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.OWNED),
     },
     preOwned: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.PREVIOUS_OWNED),
+      resolve: status =>
+        getGameCollectionStatus (
+          status,
+          COLLECTION_CONSTS.STATUS.PREVIOUS_OWNED
+        ),
     },
     forTrade: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.FOR_TRADE),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.FOR_TRADE),
     },
     want: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.WANT),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.WANT),
     },
     wantToPlay: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.WANT_TO_PLAY),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.WANT_TO_PLAY),
     },
     wantToBuy: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.WANT_TO_BUY),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.WANT_TO_BUY),
     },
     wishlist: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.WISHLIST),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.WISHLIST),
     },
     preOrdered: {
       type: GraphQLBoolean,
-      resolve: status => getGameCollectionStatus(status, COLLECTION_CONSTS.STATUS.PREORDERED),
+      resolve: status =>
+        getGameCollectionStatus (status, COLLECTION_CONSTS.STATUS.PREORDERED),
     },
     lastModified: {
       type: GraphQLString,
       resolve: status => status.$.lastmodified,
     },
-  })
+  }),
 });
 
-const CollectionGameMetaType = new GraphQLObjectType({
+const CollectionGameMetaType = new GraphQLObjectType ({
   name: 'CollectionGameMeta',
   description: '',
 
@@ -76,10 +84,10 @@ const CollectionGameMetaType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: meta => meta.collid,
     },
-  })
-})
+  }),
+});
 
-const CollectionGameType = new GraphQLObjectType({
+const CollectionGameType = new GraphQLObjectType ({
   name: 'ColectionSpecificGame',
   description: '',
 
@@ -111,7 +119,7 @@ const CollectionGameType = new GraphQLObjectType({
   }),
 });
 
-const StatusType = new GraphQLObjectType({
+const StatusType = new GraphQLObjectType ({
   name: 'CollectionStatus',
   description: '',
 
@@ -127,7 +135,7 @@ const StatusType = new GraphQLObjectType({
   }),
 });
 
-const ErrorType = new GraphQLObjectType({
+const ErrorType = new GraphQLObjectType ({
   name: 'ErrorItem',
   description: '',
 
@@ -143,7 +151,7 @@ const ErrorType = new GraphQLObjectType({
   }),
 });
 
-export default new GraphQLObjectType({
+export default new GraphQLObjectType ({
   name: 'boardGameCollection',
   description: 'Complete collection object that includes a wrapper for safety',
   fields: () => ({
@@ -156,7 +164,7 @@ export default new GraphQLObjectType({
       resolve: xml => xml.error,
     },
     body: {
-      type: new GraphQLList(CollectionGameType),
+      type: new GraphQLList (CollectionGameType),
       resolve: xml => xml.body.items.item,
     },
   }),

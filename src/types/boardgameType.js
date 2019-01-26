@@ -1,13 +1,35 @@
 import {
   GraphQLObjectType,
-  GraphQLSchema,
   GraphQLInt,
   GraphQLString,
   GraphQLList,
   GraphQLBoolean,
 } from 'graphql';
-import {GenericObjectType} from './genericType';
+import GenericObjectType from './genericType';
 import * as boardGameConstants from '../data/boardGameConstants';
+
+export const GameNameType = new GraphQLObjectType ({
+  name: 'GameName',
+  description: 'general name object for the game containing three items: name, primary, sortIndex',
+
+  fields: () => ({
+    name: {
+      type: GraphQLString,
+      description: 'name of the game',
+      resolve: xml => xml.$.value,
+    },
+    primary: {
+      type: GraphQLBoolean,
+      description: 'is this the primary listing item',
+      resolve: xml => xml.$.type === 'primary',
+    },
+    sortIndex: {
+      type: GraphQLInt,
+      description: 'sorting index used to list the names in order',
+      resolve: xml => xml.$.sortindex,
+    },
+  }),
+});
 
 // Default object type for the boardgame item
 export default new GraphQLObjectType ({
@@ -90,39 +112,5 @@ export default new GraphQLObjectType ({
       resolve: xml =>
         xml.link.filter (x => x.$.type === boardGameConstants.GAME_PUBLISHER),
     },
-  }),
-});
-
-export const GameNameType = new GraphQLObjectType ({
-  name: 'GameName',
-  description: 'general name object for the game containing three items: name, primary, sortIndex',
-
-  fields: () => ({
-    name: {
-      type: GraphQLString,
-      description: 'name of the game',
-      resolve: xml => xml.$.value,
-    },
-    primary: {
-      type: GraphQLBoolean,
-      description: 'is this the primary listing item',
-      resolve: xml => xml.$.type === 'primary',
-    },
-    sortIndex: {
-      type: GraphQLInt,
-      description: 'sorting index used to list the names in order',
-      resolve: xml => xml.$.sortindex,
-    },
-  }),
-});
-
-// currently not in use
-const GameNameValueType = new GraphQLObjectType ({
-  name: 'GameNameValue',
-  description: '...',
-
-  fields: () => ({
-    primary: GraphQLBoolean,
-    sortindex: GraphQLInt,
   }),
 });

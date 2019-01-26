@@ -1,9 +1,9 @@
-import {parseXML} from '../schemas/mainSchema';
 import fetch from 'node-fetch';
+import {parseXML} from '../schemas/mainSchema';
 import * as bggConsts from '../data/appConstants';
 
 const userResolver = async (root, args) => {
-  const {getCollection, userName} = args;
+  const {userName} = args;
   const userResponse = await fetch (
     `${bggConsts.BGG_API}user?name=${userName}`
   );

@@ -1,62 +1,65 @@
-export const MOCK_GAME_SEARCH = [
-  {'$': 
-    { 
-      type: 'boardgame', id: '143085' 
+export default [
+  {
+    $: {
+      type: 'boardgame',
+      id: '143085',
     },
-    name: [ 
+    name: [
       {
-        "$": {
-          "type": "primary",
-          "value": "7 Dice Wonders"
-        }
-      }
+        $: {
+          type: 'primary',
+          value: '7 Dice Wonders',
+        },
+      },
     ],
     yearpublished: [
       {
-        "$": {
-          "value": "2013"
-        }
-      }
-    ] 
+        $: {
+          value: '2013',
+        },
+      },
+    ],
   },
-  {'$': 
-    { 
-      type: 'boardgame', id: '155766' 
+  {
+    $: {
+      type: 'boardgame',
+      id: '155766',
     },
-    name: [ 
+    name: [
       {
-        "$": {
-          "type": "primary",
-          "value": "7 Dice Wonders: Civilization"
-        }
-      }
+        $: {
+          type: 'primary',
+          value: '7 Dice Wonders: Civilization',
+        },
+      },
     ],
     yearpublished: [
       {
-        "$": {
-          "value": "2014"
-        }
-      }
-    ] 
+        $: {
+          value: '2014',
+        },
+      },
+    ],
   },
-  {'$': 
-    { 
-      type: 'boardgame', id: '68448' 
+  {
+    $: {
+      type: 'boardgame',
+      id: '68448',
     },
-    name: [ 
+    name: [
       {
-        "$": {
-          "type": "primary",
-          "value": "7 Wonders"
-        }
-      }
+        $: {
+          type: 'primary',
+          value: '7 Wonders',
+        },
+      },
     ],
     yearpublished: [
       {
-        "$": {
-          "value": "2010"
-        }
-      }
-    ] 
+        $: {
+          value: '2010',
+        },
+      },
+    ],
   },
-]
+];

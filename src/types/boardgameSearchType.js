@@ -1,10 +1,8 @@
 import {
   GraphQLObjectType,
-  GraphQLSchema,
   GraphQLInt,
   GraphQLString,
   GraphQLList,
-  GraphQLBoolean,
 } from 'graphql';
 import {GameNameType} from './boardgameType';
 

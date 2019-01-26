@@ -1,5 +1,7 @@
+/* eslint-disable import/prefer-default-export */
+
 export const COLLECTION_CONSTS = {
-  STATUS:{
+  STATUS: {
     OWNED: 'own',
     PREVIOUS_OWNED: 'prevowned',
     FOR_TRADE: 'fortrade',
@@ -8,6 +10,6 @@ export const COLLECTION_CONSTS = {
     WANT_TO_BUY: 'wanttobuy',
     WISHLIST: 'wishlist',
     PREORDERED: 'preordered',
-    LAST_MODIFIED: 'lastmodified,'
-  }
-}
+    LAST_MODIFIED: 'lastmodified,',
+  },
+};

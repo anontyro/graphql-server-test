@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 const EXPECTED_STATUS_CODES = {
   OK: 200,
   QUEUED: 202,
@@ -11,7 +12,7 @@ const createPayload = (response, body, error = null) => {
       status: response.status,
       statusText: response.statusText,
     },
-    body: body,
+    body,
   };
 
   if (error) {
@@ -25,8 +26,8 @@ const createPayload = (response, body, error = null) => {
 };
 
 export const responseWrapper = (response, body = {}) => {
-  const parsedResponse = JSON.parse(JSON.stringify(response));
-  const parsedBody = JSON.parse(JSON.stringify(body));
+  const parsedResponse = JSON.parse (JSON.stringify (response));
+  const parsedBody = JSON.parse (JSON.stringify (body));
   let error = null;
 
   if (parsedResponse.status === EXPECTED_STATUS_CODES.TOO_MANY) {
@@ -39,5 +40,5 @@ export const responseWrapper = (response, body = {}) => {
       'Your request has been queued, please try requesting again in a few seconds';
   }
 
-  return createPayload(parsedResponse, parsedBody, error);
+  return createPayload (parsedResponse, parsedBody, error);
 };

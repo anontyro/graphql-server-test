@@ -1,5 +1,5 @@
-import {parseXML} from '../schemas/mainSchema';
 import fetch from 'node-fetch';
+import {parseXML} from '../schemas/mainSchema';
 import * as bggConsts from '../data/appConstants';
 
 const boardGameResolver = async (root, args) => {

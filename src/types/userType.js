@@ -1,16 +1,8 @@
-import {
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLBoolean,
-} from 'graphql';
-import { GenericObjectType } from './genericType';
+import {GraphQLObjectType, GraphQLString, GraphQLList} from 'graphql';
 import BoardgameType from './boardgameType';
-import { getXmlValue } from '../utils/xmlUtils';
+import {getXmlValue} from '../utils/xmlUtils';
 
-export default new GraphQLObjectType({
+export default new GraphQLObjectType ({
   name: 'userItem',
   description: 'Main user object returned from the user endpoint of the bgg api',
   fields: () => ({
@@ -24,30 +16,30 @@ export default new GraphQLObjectType({
     },
     firstName: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'firstname'),
+      resolve: xml => getXmlValue (xml, 'firstname'),
     },
     lastName: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'lastname'),
+      resolve: xml => getXmlValue (xml, 'lastname'),
     },
     yearRegistered: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'yearregistered'),
+      resolve: xml => getXmlValue (xml, 'yearregistered'),
     },
     lastLogin: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'lastlogin'),
+      resolve: xml => getXmlValue (xml, 'lastlogin'),
     },
     country: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'country'),
+      resolve: xml => getXmlValue (xml, 'country'),
     },
     stateOrProvince: {
       type: GraphQLString,
-      resolve: xml => getXmlValue(xml, 'stateorprovince'),
+      resolve: xml => getXmlValue (xml, 'stateorprovince'),
     },
     collection: {
-      type: new GraphQLList(BoardgameType),
+      type: new GraphQLList (BoardgameType),
       resolve: xml => xml.collection,
     },
   }),

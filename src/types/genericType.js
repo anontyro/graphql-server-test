@@ -1,13 +1,6 @@
-import {
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLBoolean,
-} from 'graphql';
+import {GraphQLObjectType, GraphQLString} from 'graphql';
 
-export const GenericObjectType = new GraphQLObjectType ({
+export default new GraphQLObjectType ({
   name: 'GenericObject',
   description: `Standard recurring object that is commonly used in the bgg api to return just these three items`,
 
