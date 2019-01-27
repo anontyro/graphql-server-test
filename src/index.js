@@ -10,7 +10,10 @@ const app = express ();
 app.use (cors ());
 
 app.get ('/', (req, res, next) => {
-  res.json (ABOUT_DATA);
+  const hostName = req.get ('host');
+  const data = ABOUT_DATA;
+  data.apiRoot = `${req.protocol}://${hostName}/graphql`;
+  res.json (data);
 
   next ();
 });

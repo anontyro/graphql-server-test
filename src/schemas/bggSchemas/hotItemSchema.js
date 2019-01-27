@@ -1,9 +1,9 @@
 import {GraphQLString, GraphQLList} from 'graphql';
-import BoardgameType from '../../types/boardgameType';
 import hotItemResolve from '../../resolvers/hotItemsResolver';
+import HotItemType from '../../types/hotItemType';
 
 const hotItemSchema = {
-  type: new GraphQLList (BoardgameType),
+  type: new GraphQLList (HotItemType),
   args: {
     item: {type: GraphQLString, defaultValue: 'boardgame'},
   },
